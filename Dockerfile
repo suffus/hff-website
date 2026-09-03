@@ -11,9 +11,11 @@ RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY package.json package-lock.json .npmrc ./
 
-RUN npm ci --no-audit --no-fund
+# Skip lifecycle scripts: unrs-resolver postinstall can hang on arm64 under npm 11.
+# Next.js/Tailwind use prebuilt optional binaries; scripts are not needed to build.
+RUN npm ci --no-audit --no-fund --ignore-scripts
 
 # ============================================
 # Stage 2: Build
