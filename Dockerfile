@@ -25,20 +25,10 @@ RUN node -e "\
   fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2)); \
 "
 
-# Mount host ~/.npm (via build context `npmcache`) and optionally ./node_modules
-# (via build context `hostnode`). See builld-docker.sh.
+# Use the host npm cache (see builld-docker.sh). Do not copy host node_modules —
+# copying breaks .bin symlinks (e.g. next -> ../next/dist/bin/next).
 RUN --mount=type=bind,from=npmcache,source=.,target=/root/.npm,rw \
-    --mount=type=bind,from=hostnode,source=.,target=/mnt/hostnode,readonly \
-    if [ -n "$(ls -A /mnt/hostnode 2>/dev/null)" ]; then \
-      echo "Using host node_modules as base"; \
-      mkdir -p /app/node_modules; \
-      cp -aL /mnt/hostnode/. /app/node_modules/; \
-      echo "Installing missing platform-specific optional dependencies"; \
-      npm install --prefer-offline --no-audit --no-fund --include=optional; \
-    else \
-      echo "Installing from lockfile (using host npm cache)"; \
-      npm ci --prefer-offline --no-audit --no-fund; \
-    fi
+    npm ci --prefer-offline --no-audit --no-fund
 
 # ============================================
 # Stage 2: Build
