@@ -1,13 +1,10 @@
 # Next.js 16 requires Node.js 20.9+. Pin the base image for reproducible builds.
-ARG NODE_VERSION=24-alpine
+ARG NODE_VERSION=24-slim
 
 # ============================================
 # Stage 1: Dependencies
 # ============================================
 FROM node:${NODE_VERSION} AS deps
-
-# libc6-compat is required for some native modules on Alpine.
-RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
 
@@ -52,8 +49,8 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 
-RUN addgroup --system --gid 1001 nodejs \
-    && adduser --system --uid 1001 nextjs
+RUN groupadd --system --gid 1001 nodejs \
+    && useradd --system --uid 1001 --gid nodejs nextjs
 
 COPY --from=builder /app/public ./public
 
