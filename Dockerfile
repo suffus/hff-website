@@ -13,8 +13,16 @@ WORKDIR /app
 
 COPY package.json package-lock.json .npmrc ./
 
-# Skip lifecycle scripts: unrs-resolver postinstall can hang on arm64 under npm 11.
-# Next.js/Tailwind use prebuilt optional binaries; scripts are not needed to build.
+# ESLint is only needed for `npm run lint` locally/CI — not for `next build`.
+# Omitting it cuts npm ci from ~365 packages to ~59, which is much faster on ARM.
+RUN node -e "\
+  const fs = require('fs'); \
+  const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8')); \
+  delete pkg.devDependencies.eslint; \
+  delete pkg.devDependencies['eslint-config-next']; \
+  fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2)); \
+"
+
 RUN npm ci --no-audit --no-fund --ignore-scripts
 
 # ============================================
