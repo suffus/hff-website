@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.4
 # Next.js 16 requires Node.js 20.9+. Pin the base image for reproducible builds.
 ARG NODE_VERSION=24-slim
 
@@ -24,8 +25,17 @@ RUN node -e "\
   fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2)); \
 "
 
-RUN --mount=type=cache,target=/root/.npm \
-    npm ci --no-audit --no-fund --ignore-scripts
+# Mount host ~/.npm (via build context `npmcache`) and optionally ./node_modules
+# (via build context `hostnode`). See builld-docker.sh.
+RUN --mount=type=bind,from=npmcache,source=.,target=/root/.npm,rw \
+    --mount=type=bind,from=hostnode,source=.,target=/mnt/hostnode,readonly \
+    if [ -n "$(ls -A /mnt/hostnode 2>/dev/null)" ]; then \
+      echo "Using host node_modules (skipping npm ci)"; \
+      cp -a /mnt/hostnode/. /app/node_modules/; \
+    else \
+      echo "Installing from lockfile (using host npm cache)"; \
+      npm ci --prefer-offline --no-audit --no-fund --ignore-scripts; \
+    fi
 
 # ============================================
 # Stage 2: Build
