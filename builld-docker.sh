@@ -10,7 +10,7 @@ mkdir -p "$NPM_CACHE"
 # Warm the host npm cache when node_modules is missing (optional; local npm ci is fast).
 if [ ! -d "$HOST_NODE_MODULES" ] || [ -z "$(ls -A "$HOST_NODE_MODULES" 2>/dev/null)" ]; then
   echo "No local node_modules — warming ${NPM_CACHE} from lockfile..."
-  npm ci --ignore-scripts --no-audit --no-fund
+  npm ci --no-audit --no-fund
 fi
 
 # Empty dir fallback so build contexts always exist when node_modules is absent.

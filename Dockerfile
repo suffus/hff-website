@@ -30,11 +30,14 @@ RUN node -e "\
 RUN --mount=type=bind,from=npmcache,source=.,target=/root/.npm,rw \
     --mount=type=bind,from=hostnode,source=.,target=/mnt/hostnode,readonly \
     if [ -n "$(ls -A /mnt/hostnode 2>/dev/null)" ]; then \
-      echo "Using host node_modules (skipping npm ci)"; \
-      cp -a /mnt/hostnode/. /app/node_modules/; \
+      echo "Using host node_modules as base"; \
+      mkdir -p /app/node_modules; \
+      cp -aL /mnt/hostnode/. /app/node_modules/; \
+      echo "Installing missing platform-specific optional dependencies"; \
+      npm install --prefer-offline --no-audit --no-fund --include=optional; \
     else \
       echo "Installing from lockfile (using host npm cache)"; \
-      npm ci --prefer-offline --no-audit --no-fund --ignore-scripts; \
+      npm ci --prefer-offline --no-audit --no-fund; \
     fi
 
 # ============================================
