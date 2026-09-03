@@ -8,6 +8,10 @@ FROM node:${NODE_VERSION} AS deps
 
 WORKDIR /app
 
+# Avoid IPv6 black holes in Docker (common on AWS EC2): Node tries IPv6 first by
+# default, which can stall for minutes before falling back to IPv4.
+ENV NODE_OPTIONS="--dns-result-order=ipv4first"
+
 COPY package.json package-lock.json .npmrc ./
 
 # ESLint is only needed for `npm run lint` locally/CI — not for `next build`.
@@ -20,7 +24,8 @@ RUN node -e "\
   fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2)); \
 "
 
-RUN npm ci --no-audit --no-fund --ignore-scripts
+RUN --mount=type=cache,target=/root/.npm \
+    npm ci --no-audit --no-fund --ignore-scripts
 
 # ============================================
 # Stage 2: Build
