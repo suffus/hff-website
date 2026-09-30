@@ -5,6 +5,8 @@ const navigation = {
   main: [
     { name: 'Home', href: '/' },
     { name: 'About Us', href: '/about' },
+    { name: 'News & Analysis', href: '/news' },
+    { name: 'RSS Feed', href: '/news/rss.xml' },
     { name: 'Contact', href: '/contact' },
   ],
   focus: [

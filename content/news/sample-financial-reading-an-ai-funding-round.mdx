@@ -1,0 +1,82 @@
+---
+title: "Sample analysis: Reading an AI funding round, a worked example"
+date: 2026-09-15
+summary: "A placeholder financial-analysis piece that walks through a hypothetical funding announcement and shows how to read the numbers behind the headline."
+category: financial
+format: analysis
+tags: [coding, creative]
+author: "HFF Research"
+sources:
+  - title: "Hypothetical funding announcement (placeholder link)"
+    url: "https://example.com/funding-announcement"
+draft: false
+---
+
+<Callout title="Sample content" tone="warning">
+This is a placeholder article generated when the News & Analysis section was created. Every
+company and figure below is invented to demonstrate the financial-analysis format, including the
+`KeyNumbers` and `DataTable` components. Replace or delete it before publishing.
+</Callout>
+
+Funding announcements are written to impress. The headline number is real, but on its own it tells
+you very little about whether a company is healthy, whether its tools will still exist in three
+years, or who ultimately pays for them. Here is how we read one, using an invented example.
+
+## The announcement
+
+"Example Labs raises $400M Series C at a $3.2B valuation to accelerate its AI coding platform."
+
+<KeyNumbers title="At a glance (hypothetical figures)">
+  <KeyNumber value="$400M" label="Round size" note="Series C, primary capital" />
+  <KeyNumber value="$3.2B" label="Post-money valuation" note="Up from $900M at Series B" />
+  <KeyNumber value="~40x" label="Implied revenue multiple" note="On reported $80M ARR" />
+</KeyNumbers>
+
+## Step 1: Separate the valuation from the cash
+
+The $3.2B is a price agreed between the company and its newest investors for a small slice of the
+business. Nobody has $3.2B. The $400M is the cash that actually arrives and has to fund
+operations, and most of it will be spent on compute and salaries.
+
+## Step 2: Work out the burn
+
+Companies rarely publish burn rate, but you can bracket it. If the previous round was 18 months
+ago and this one is described as giving "three years of runway", the company expects to spend
+roughly $130M a year. For a business with $80M in annual recurring revenue, that means it is still
+losing money on every customer it serves, which is normal at this stage but worth knowing.
+
+## Step 3: Ask what the multiple assumes
+
+<DataTable caption="Illustrative comparison of revenue multiples (invented data)" source="Hypothetical, for format demonstration only">
+
+| Company (fictional) | Stage | ARR | Valuation | Multiple |
+| --- | --- | ---: | ---: | ---: |
+| Example Labs | Series C | $80M | $3.2B | 40x |
+| Sample Systems | Series B | $25M | $600M | 24x |
+| Placeholder AI | Public | $410M | $6.1B | 15x |
+
+</DataTable>
+
+A 40x multiple only makes sense if investors expect revenue to grow several-fold while the company
+keeps most of its customers. That is a bet on both the product and on the underlying model costs
+falling. If compute prices stay flat, the margin story does not work.
+
+## Step 4: Follow the strategic money
+
+Look at *who* invested. When a cloud provider or model vendor leads a round, part of the "cash" is
+often credits redeemable only on that vendor's platform. The company's independence, and its
+customers' ability to switch, shrinks accordingly.
+
+<Callout title="Why we care" tone="info">
+Our interest is not in picking winners. It is in understanding whether the tools people come to
+rely on, for coding, creative work or accessibility, are built on business models that can survive
+without locking users in or quietly raising prices once alternatives disappear.
+</Callout>
+
+## What we would watch next
+
+- Whether pricing changes in the twelve months after the round.
+- Whether the company publishes usage limits or model-provider dependencies.
+- Whether the next round is up, flat or down, which will say more than any press release.
+
+<SourceList />

@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import MedicalClient from './MedicalClient';
+import { getArticlesByTag } from '@/lib/news';
 
 export const metadata: Metadata = {
   title: 'Medical AI - Human Freedom Foundation',
@@ -7,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Medical() {
-  return <MedicalClient />;
+  return <MedicalClient relatedArticles={getArticlesByTag('medical', 3)} />;
 }

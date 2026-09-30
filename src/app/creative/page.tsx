@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import CreativeClient from './CreativeClient';
+import { getArticlesByTag } from '@/lib/news';
 
 export const metadata: Metadata = {
   title: 'Creative AI - Human Freedom Foundation',
@@ -7,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Creative() {
-  return <CreativeClient />;
+  return <CreativeClient relatedArticles={getArticlesByTag('creative', 3)} />;
 }

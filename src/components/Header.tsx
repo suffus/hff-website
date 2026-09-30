@@ -14,15 +14,29 @@ const navigation = [
   { name: 'Creative AI', href: '/creative' },
   { name: 'Accessibility', href: '/accessibility' },
   { name: 'Medical AI', href: '/medical' },
+  { name: 'News & Analysis', href: '/news' },
   { name: 'Contact', href: '/contact' },
 ];
+
+function isActivePath(pathname: string | null, href: string): boolean {
+  if (!pathname) return false;
+  if (href === '/') return pathname === '/';
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200/50">
+    // backdrop-filter makes the header the containing block for the `fixed`
+    // mobile panel (clipping it to the header height), so disable the blur
+    // while the menu is open.
+    <header
+      className={`sticky top-0 z-50 border-b border-gray-200/50 bg-white/80 ${
+        mobileMenuOpen ? '' : 'backdrop-blur-xl'
+      }`}
+    >
       <nav className="mx-auto max-w-7xl px-6 lg:px-8" aria-label="Top">
         <div className="flex w-full items-center justify-between py-4">
           <div className="flex items-center">
@@ -33,26 +47,26 @@ export default function Header() {
                 </div>
                 <div className="absolute -inset-1 bg-gradient-to-br from-green-600 to-emerald-600 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-200 -z-10"></div>
               </div>
-              <span className="text-xl font-bold text-gray-900 group-hover:text-green-600 transition-colors duration-200">
-                <span className="hidden sm:inline">Human Freedom Foundation</span>
-                <span className="sm:hidden">HFF</span>
+              <span className="whitespace-nowrap text-xl font-bold text-gray-900 group-hover:text-green-600 transition-colors duration-200">
+                <span className="hidden sm:inline lg:hidden xl:inline">Human Freedom Foundation</span>
+                <span className="sm:hidden lg:inline xl:hidden">HFF</span>
               </span>
             </Link>
           </div>
           
-          <div className="ml-10 space-x-1 hidden lg:flex">
+          <div className="ml-4 hidden lg:flex xl:ml-10 xl:space-x-1">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className={`relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
-                  pathname === item.href
+                className={`relative whitespace-nowrap rounded-full px-2.5 py-2 text-[13px] font-medium transition-all duration-200 xl:px-4 xl:text-sm ${
+                  isActivePath(pathname, item.href)
                     ? 'text-green-600 bg-green-50'
                     : 'text-gray-700 hover:text-green-600 hover:bg-gray-50'
                 }`}
               >
                 {item.name}
-                {pathname === item.href && (
+                {isActivePath(pathname, item.href) && (
                   <div className="absolute inset-0 rounded-full bg-gradient-to-r from-green-500/10 to-emerald-500/10"></div>
                 )}
               </Link>
@@ -99,7 +113,7 @@ export default function Header() {
                       key={item.name}
                       href={item.href}
                       className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 transition-colors duration-200 ${
-                        pathname === item.href
+                        isActivePath(pathname, item.href)
                           ? 'text-green-600 bg-green-50'
                           : 'text-gray-900 hover:bg-gray-50'
                       }`}
