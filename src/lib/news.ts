@@ -36,6 +36,8 @@ const frontmatterSchema = z.object({
   author: z.string().min(1).default(DEFAULT_AUTHOR),
   heroImage: z.string().optional(),
   sources: z.array(sourceSchema).optional(),
+  /** Adds the "AI models were used in the authoring of this article." notice. */
+  aiAssisted: z.boolean().default(false),
   draft: z.boolean().default(false),
 });
 
@@ -99,6 +101,7 @@ function parseArticle(filePath: string): Article {
     author: fm.author,
     heroImage: fm.heroImage,
     sources: fm.sources,
+    aiAssisted: fm.aiAssisted,
     draft: fm.draft,
     readingTimeMinutes: readingTime(content),
     href: `/news/${slug}`,

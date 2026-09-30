@@ -22,6 +22,7 @@ npm run new-article -- "Article title" --category news|technical|financial [--ta
 | `author`    | no       | Defaults to "Human Freedom Foundation". |
 | `heroImage` | no       | Path under `/public` or absolute URL. |
 | `sources`   | no       | List of `{ title, url }`. Rendered where `<SourceList />` appears, or after the body if omitted. |
+| `aiAssisted` | no      | `true` adds the notice "AI models were used in the authoring of this article." under the byline and at the end of the body. Use it whenever an AI model drafted or substantially contributed to the text; the article is still attributed to `author`. |
 | `draft`     | no       | `true` hides the article from production builds (still visible in `npm run dev`). |
 
 ## Components available in the body

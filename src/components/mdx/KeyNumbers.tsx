@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { Children, type ReactNode } from 'react';
 
 export interface KeyNumberProps {
   /** The headline figure, e.g. "$2.4B" or "38%". */
@@ -35,12 +35,15 @@ export interface KeyNumbersProps {
  * ```
  */
 export default function KeyNumbers({ title, children }: KeyNumbersProps) {
+  // Four figures sit better as a 2x2 grid than as a row of three plus an orphan.
+  const count = Children.count(children);
+  const columns = count === 4 ? 'sm:grid-cols-2' : 'sm:grid-cols-2 lg:grid-cols-3';
   return (
     <section className="not-prose my-10">
       {title && (
         <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-gray-500">{title}</h4>
       )}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">{children}</div>
+      <div className={`grid grid-cols-1 gap-4 ${columns}`}>{children}</div>
     </section>
   );
 }

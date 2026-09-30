@@ -157,6 +157,7 @@ ${authorLine}
 sources:
   - title: "TODO: primary source"
     url: "https://example.com"
+# aiAssisted: true            # uncomment if AI models were used to author the text
 draft: ${opts.publish ? 'false' : 'true'}                 # set to false to publish
 ---
 `;

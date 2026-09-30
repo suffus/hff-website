@@ -62,6 +62,9 @@ export const PILLAR_TAGS: Record<string, { label: string; href: string }> = {
 
 export const DEFAULT_AUTHOR = 'Human Freedom Foundation';
 
+/** Notice shown on articles with `aiAssisted: true` in their frontmatter. */
+export const AI_ASSISTED_NOTICE = 'AI models were used in the authoring of this article.';
+
 /** Display labels for tags whose auto-generated title case would be wrong. */
 export const TAG_LABELS: Record<string, string> = {
   rag: 'RAG',
@@ -69,6 +72,8 @@ export const TAG_LABELS: Record<string, string> = {
   llm: 'LLMs',
   llms: 'LLMs',
   ai: 'AI',
+  ipo: 'IPO',
+  gdp: 'GDP',
   'open-source': 'Open source',
   'open-weights': 'Open weights',
 };
@@ -111,6 +116,8 @@ export interface ArticleMeta {
   author: string;
   heroImage?: string;
   sources?: ArticleSource[];
+  /** True when AI models were used in authoring; shows an attribution notice. */
+  aiAssisted: boolean;
   draft: boolean;
   readingTimeMinutes: number;
   href: string;

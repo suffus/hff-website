@@ -12,6 +12,7 @@ import FinancialDisclaimer from '@/components/mdx/FinancialDisclaimer';
 import SourceList from '@/components/mdx/SourceList';
 import { mdxComponents } from '@/components/mdx/mdx-components';
 import {
+  AI_ASSISTED_NOTICE,
   CATEGORIES,
   formatDate,
   getAllSlugs,
@@ -136,6 +137,9 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
                       <span aria-hidden="true"> &middot; </span>
                       {article.readingTimeMinutes} min read
                     </div>
+                    {article.aiAssisted && (
+                      <div className="mt-0.5 text-xs italic text-gray-500">{AI_ASSISTED_NOTICE}</div>
+                    )}
                   </div>
                 </div>
                 {article.tags.length > 0 && (
@@ -186,6 +190,12 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
                   }}
                 />
                 {!bodyHasSourceList && <SourceList sources={article.sources} />}
+                {article.aiAssisted && (
+                  <p className="not-prose mt-10 border-t border-gray-200 pt-4 text-sm text-gray-500">
+                    <span className="font-semibold text-gray-700">Attribution.</span> This article is published by{' '}
+                    {article.author}. {AI_ASSISTED_NOTICE}
+                  </p>
+                )}
                 {article.category === 'financial' && <FinancialDisclaimer />}
               </div>
             </div>
