@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import CodingClient from './CodingClient';
+import { getArticlesByTag } from '@/lib/news';
 
 export const metadata: Metadata = {
   title: 'AI Coding - Human Freedom Foundation',
@@ -7,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Coding() {
-  return <CodingClient />;
+  return <CodingClient relatedArticles={getArticlesByTag('coding', 3)} />;
 }

@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import AccessibilityClient from './AccessibilityClient';
+import { getArticlesByTag } from '@/lib/news';
 
 export const metadata: Metadata = {
   title: 'Accessibility - Human Freedom Foundation',
@@ -7,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Accessibility() {
-  return <AccessibilityClient />;
+  return <AccessibilityClient relatedArticles={getArticlesByTag('accessibility', 3)} />;
 }

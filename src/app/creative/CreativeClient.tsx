@@ -3,8 +3,14 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Layout from '@/components/Layout';
+import RelatedNews from '@/components/news/RelatedNews';
+import type { ArticleMeta } from '@/lib/news-shared';
 
-export default function CreativeClient() {
+interface CreativeClientProps {
+  relatedArticles?: ArticleMeta[];
+}
+
+export default function CreativeClient({ relatedArticles = [] }: CreativeClientProps) {
   return (
     <Layout>
       <div className="py-24 sm:py-32">
@@ -144,6 +150,13 @@ export default function CreativeClient() {
               </motion.div>
             </div>
           </div>
+
+          <RelatedNews
+            articles={relatedArticles}
+            description="Our latest writing on AI and creative work."
+            moreHref="/news/tag/creative"
+            moreLabel="All creative AI articles"
+          />
         </div>
       </div>
     </Layout>

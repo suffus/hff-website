@@ -3,8 +3,14 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Layout from '@/components/Layout';
+import RelatedNews from '@/components/news/RelatedNews';
+import type { ArticleMeta } from '@/lib/news-shared';
 
-export default function AccessibilityClient() {
+interface AccessibilityClientProps {
+  relatedArticles?: ArticleMeta[];
+}
+
+export default function AccessibilityClient({ relatedArticles = [] }: AccessibilityClientProps) {
   return (
     <Layout>
       <div className="py-24 sm:py-32">
@@ -161,6 +167,13 @@ export default function AccessibilityClient() {
               </motion.div>
             </div>
           </div>
+
+          <RelatedNews
+            articles={relatedArticles}
+            description="Our latest writing on AI and accessibility."
+            moreHref="/news/tag/accessibility"
+            moreLabel="All accessibility articles"
+          />
         </div>
       </div>
     </Layout>

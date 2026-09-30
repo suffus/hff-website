@@ -3,8 +3,14 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Layout from '@/components/Layout';
+import RelatedNews from '@/components/news/RelatedNews';
+import type { ArticleMeta } from '@/lib/news-shared';
 
-export default function MedicalClient() {
+interface MedicalClientProps {
+  relatedArticles?: ArticleMeta[];
+}
+
+export default function MedicalClient({ relatedArticles = [] }: MedicalClientProps) {
   return (
     <Layout>
       <div className="py-24 sm:py-32">
@@ -179,6 +185,13 @@ export default function MedicalClient() {
               </motion.div>
             </div>
           </div>
+
+          <RelatedNews
+            articles={relatedArticles}
+            description="Our latest writing on AI in healthcare."
+            moreHref="/news/tag/medical"
+            moreLabel="All medical AI articles"
+          />
         </div>
       </div>
     </Layout>
